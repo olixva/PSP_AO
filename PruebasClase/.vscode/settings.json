@@ -5,5 +5,6 @@
         "lib/**/*.jar"
     ],
     "docwriter.hotkey.windows": "Alt + .",
-    "docwriter.language": "Spanish"
+    "docwriter.language": "Spanish",
+    "java.dependency.packagePresentation": "hierarchical"
 }
