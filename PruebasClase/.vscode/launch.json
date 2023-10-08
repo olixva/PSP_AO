@@ -1,0 +1,98 @@
+{
+    // Use IntelliSense para saber los atributos posibles.
+    // Mantenga el puntero para ver las descripciones de los existentes atributos.
+    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "ProducConsumCinta",
+            "request": "launch",
+            "mainClass": "Cinta.ProducConsumCinta",
+            "projectName": "PruebasClase_3b36f185"
+        },
+        {
+            "type": "java",
+            "name": "LanzadorHilosSinc",
+            "request": "launch",
+            "mainClass": "HilosSincronizados.LanzadorHilosSinc",
+            "projectName": "PruebasClase_3b36f185"
+        },
+        {
+            "type": "java",
+            "name": "LanzadorHilosSinc2",
+            "request": "launch",
+            "mainClass": "HilosSincronizados.LanzadorHilosSinc2",
+            "projectName": "PruebasClase_3b36f185"
+        },
+        {
+            "type": "java",
+            "name": "ProductorConsumidor",
+            "request": "launch",
+            "mainClass": "ProductorConsumidor.main.ProductorConsumidor",
+            "projectName": "PruebasClase_3b36f185"
+        },
+        {
+            "type": "java",
+            "name": "LanzadorHilo",
+            "request": "launch",
+            "mainClass": "PruebasHilos.LanzadorHilo",
+            "projectName": "PruebasClase_3b36f185"
+        },
+        {
+            "type": "java",
+            "name": "LanzadorHilo2",
+            "request": "launch",
+            "mainClass": "PruebasHilos.LanzadorHilo2",
+            "projectName": "PruebasClase_3b36f185"
+        },
+        {
+            "type": "java",
+            "name": "LanzadorReloj",
+            "request": "launch",
+            "mainClass": "PruebasHilos.LanzadorReloj",
+            "projectName": "PruebasClase_3b36f185"
+        },
+        {
+            "type": "java",
+            "name": "Lanzador",
+            "request": "launch",
+            "mainClass": "PruebasProcesos.Lanzador",
+            "projectName": "PruebasClase_3b36f185"
+        },
+        {
+            "type": "java",
+            "name": "RunEdit",
+            "request": "launch",
+            "mainClass": "PruebasProcesos.RunEdit",
+            "projectName": "PruebasClase_3b36f185"
+        },
+        {
+            "type": "java",
+            "name": "RunRedirect",
+            "request": "launch",
+            "mainClass": "PruebasProcesos.RunRedirect",
+            "projectName": "PruebasClase_3b36f185"
+        },
+        {
+            "type": "java",
+            "name": "RunTypeProcessBuilder",
+            "request": "launch",
+            "mainClass": "PruebasProcesos.RunTypeProcessBuilder",
+            "projectName": "PruebasClase_3b36f185"
+        },
+        {
+            "type": "java",
+            "name": "Sumador",
+            "request": "launch",
+            "mainClass": "PruebasProcesos.Sumador",
+            "projectName": "PruebasClase_3b36f185"
+        }
+    ]
+}
