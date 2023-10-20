@@ -35,16 +35,33 @@ public class Norad {
             System.out.print("Orden> ");
             String comando = sc.next();
             if (comando.contains("atacar")) {
-                sincro.realizarActivacion(); // Realizamos primera verificacion para lanzarf
+                sincro.resetearContadores();
+                sincro.realizarActivacion(); // Realizamos primera verificacion para lanzar
+                dobleVerificacion(flujoSalida, comando);
+
                 fin = true;
+            } else {
+                fin = true;
+                sincro.realizarActivacion();
+                dobleVerificacion(flujoSalida, comando);
             }
-            dobleVerificacion(flujoSalida);
+
+            sincro.esperarMisilesAcabados();
+
+            System.out.println("Total aciertos: " + sincro.getAciertos() + " Total fallos: " + sincro.getFallos());
+            System.out.println("Total misiles lanzados: " + MAXIMO_MISILES);
+            System.out.println("Porcentaje de exito: " + sincro.getAciertos()*100/MAXIMO_MISILES + "%");
         }
     }
 
-    private static void dobleVerificacion(PrintWriter[] flujoSalida) {
+    private static void dobleVerificacion(PrintWriter[] flujoSalida, String mensaje) {
         for (PrintWriter flujo : flujoSalida) {
-            flujo.println("atacar");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            flujo.println();
         }
     }
 }

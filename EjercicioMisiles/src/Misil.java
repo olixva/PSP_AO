@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PipedReader;
 import java.io.PipedWriter;
+import java.util.Random;
 
 public class Misil extends Thread {
     private int id;
@@ -37,10 +38,22 @@ public class Misil extends Thread {
             String comando = flujoEntrada.readLine();
             if (comando.contains("atacar")) {
                 System.out.println("Misil " + id + " lanzado.");
+                
+                Random aleatorio = new Random();
+                Thread.sleep(aleatorio.nextInt(0, 500));
+                if (aleatorio.nextInt(2) > 0) {
+                    System.out.println("Misil " + id + " acierta.");
+                    sincro.notificarAcierto();
+                } else {
+                    System.out.println("Misil " + id + " fallaa.");
+                    sincro.notificarFallo();
+                }
             } else {
                 System.out.println("Misil " + id + " abortado.");
             }
-        } catch (IOException e) {
+
+            sincro.notificarMisilFinalizado();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
