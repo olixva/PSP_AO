@@ -3,7 +3,10 @@ import java.util.Random;
 
 public class Coche extends Thread{
 	private int id;
-    private boolean haAparcado = false;
+	private boolean haAparcado = false;
+	
+	private long tiempoEntrada;
+	private long tiempoSalida;
 
 	private Sincro sincro;
     private Parking parking;
@@ -29,6 +32,8 @@ public class Coche extends Thread{
 			while (intentos < 3) {
 				Thread.sleep(aleatorio.nextInt(100));
 				if (parking.esDentroParking()) {
+					tiempoEntrada = System.currentTimeMillis(); //Guardamos el tiempo de entrada
+
 					System.out.println("El coche "+ id +" entra al parking");
 					//simulamos un tiempo de estancia
 					Thread.sleep(aleatorio.nextInt(400));
@@ -36,6 +41,9 @@ public class Coche extends Thread{
                     System.out.println("El coche " + id + " sale del parking");
                     haAparcado = true;
 					intentos = 3; //Cumplimos la condicio para salir del bucle
+
+					tiempoSalida = System.currentTimeMillis(); //Guardamos el tiempo de salida
+					parking.addTiempoEstacionado(tiempoSalida - tiempoEntrada);
 				}
 				else {
 					System.out.println("El coche "+ id +" no ha podido entrar al parking");

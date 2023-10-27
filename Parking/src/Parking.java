@@ -1,11 +1,15 @@
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Parking {
     private int maxparking;
     private Semaphore estacionados;
-    private Semaphore accesoContador;
-    private int contadorEstacionamientos;
+	private Semaphore accesoContador;
+	private Lock miLock = new ReentrantLock();
+	private int contadorEstacionamientos;
+	private long tiempoEstacionamientos;
     
 	public Parking(int maxparking) {
 		this.maxparking = maxparking;
@@ -14,7 +18,7 @@ public class Parking {
 		this.contadorEstacionamientos = 0;
 	}
 
-	public int getContadorEstacionamientos() {
+	public int getContadorEstacionamientos() { //Obtiene el contador de coches totales estacionados
 		int contador = 0;
 		try {
 			accesoContador.acquire();
@@ -26,7 +30,7 @@ public class Parking {
 		return contador;
 	}
 
-	public void entrarParking() {
+	public void entrarParking() { //Metodo en desuso
 		try {
 			estacionados.acquire();
 		} catch (InterruptedException e) {
@@ -35,7 +39,7 @@ public class Parking {
 		
 	}
 
-	public void salirParking() {
+	public void salirParking() { //Metodo que hace salir al coche del parking y aumenta el contador de estacionados
 		estacionados.release();
 		try {
 			accesoContador.acquire();
@@ -46,8 +50,22 @@ public class Parking {
 		}
 	}
 
-	public boolean esDentroParking() {
+	public boolean esDentroParking() { //Comprueba si puede entrar al parking, si puede entra y si no devuelve false
 		return estacionados.tryAcquire();
 	}
 
+	public void addTiempoEstacionado(long tiempoCoche) { //Agrega el tiempo estacionado de un coche a la variable total
+		miLock.lock();
+		tiempoEstacionamientos += tiempoCoche;
+		miLock.unlock();
+	}
+
+	public long getTiempoEstacionamientos() { 
+		long tiempo;
+		
+		miLock.lock();
+		tiempo = tiempoEstacionamientos;
+		miLock.unlock();
+		return tiempo;
+	}
 }

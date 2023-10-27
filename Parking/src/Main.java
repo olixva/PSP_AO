@@ -18,8 +18,9 @@ public class Main {
         long finSimulacion = System.currentTimeMillis();
         long tiempoSimulacion = finSimulacion - inicioSimulacion;
         
-        System.out.println("Tiempo simulación "+ tiempoSimulacion);
-        System.out.println("Han entrado "+ parking.getContadorEstacionamientos());
+        System.out.println("Tiempo simulación " + tiempoSimulacion);
+        System.out.println("Han entrado " + parking.getContadorEstacionamientos());
+        System.out.println("El tiempo medio de estancia es " + parking.getTiempoEstacionamientos());
 	}
 
 }
