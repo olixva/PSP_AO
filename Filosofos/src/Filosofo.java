@@ -44,21 +44,21 @@ public class Filosofo extends Thread {
     }
 
     private void comer() {
-        // Intenta coger palillos
-        if ((palilloEspera[palilloIzq].tryAcquire()) && (palilloEspera[palilloDer].tryAcquire())) {
-            System.out.println("Filosofo " + id + " comiendo como cabron...");
-            esperar();
+        // Intenta coger palillo izquierdo
+        if ((palilloEspera[palilloIzq].tryAcquire())) {
+            // Si lo coje intenta coger el palillo derecho
+            if ((palilloEspera[palilloDer].tryAcquire())) {
+                // Si lo coje come
+                System.out.println("Filosofo " + id + " comiendo como cabron...");
+                esperar();
+                // Y suelta los dos
+                palilloEspera[palilloIzq].release();
+                palilloEspera[palilloDer].release();
+            } else {
+                //Si coje el izquierdo pero no el derecho, suelta el izquierdo
+                palilloEspera[palilloIzq].release();
+            }
         }
-        
-        //Devuelve los palillos que tenga
-        if (palilloEspera[palilloIzq].tryAcquire(0)) {
-            palilloEspera[palilloIzq].release();
-        }
-
-        if (palilloEspera[palilloDer].tryAcquire(0)) {
-            palilloEspera[palilloDer].release();
-        }
-
     }
 
     private void esperar() {
