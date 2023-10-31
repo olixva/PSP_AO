@@ -34,11 +34,9 @@ public class Filosofo extends Thread {
             e.printStackTrace();
         }
 
-        int comidas = 0;
         while (comidas < MAX_COMIDAS) {
             pensar();
             comer();
-            comidas++;
         }
         System.out.println("Filosofo " + id + " ha terminado");
     }
@@ -50,12 +48,13 @@ public class Filosofo extends Thread {
             if ((palilloEspera[palilloDer].tryAcquire())) {
                 // Si lo coje come
                 System.out.println("Filosofo " + id + " comiendo como cabron...");
+                this.comidas++;
                 esperar();
                 // Y suelta los dos
                 palilloEspera[palilloIzq].release();
                 palilloEspera[palilloDer].release();
             } else {
-                //Si coje el izquierdo pero no el derecho, suelta el izquierdo
+                // Si coje el izquierdo pero no el derecho, suelta el izquierdo
                 palilloEspera[palilloIzq].release();
             }
         }
