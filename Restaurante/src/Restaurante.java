@@ -7,15 +7,15 @@ import java.util.concurrent.Semaphore;
 
 public class Restaurante {
 
-    final static int MAX_MESAS = 100;
-    final static int MAX_COCINEROS = 8;
+    static final int MAX_MESAS = 20;
+    static final int MAX_COCINEROS = 8;
 
     public static void main(String[] args) {
 
         System.out.println("Iniciando servicio restaurante...");
         System.out.println("Antonio Oliva Carceles " + LocalDate.now() + "\n-----------------------------------");
-        
-        long miliInicio = System.currentTimeMillis(); //Obtenemos los ms de inicio
+
+        long miliInicio = System.currentTimeMillis(); // Obtenemos los ms de inicio
         try {
             Sincro sincro = new Sincro(MAX_MESAS);
 
@@ -36,7 +36,7 @@ public class Restaurante {
 
             // Esperamos a que terminen todas las mesas
             sincro.esperarFinMesa();
-            metre.finalizar(); //Finalizamos la instancia Metre
+            metre.finalizar(); // Finalizamos la instancia Metre
 
             // Mostramos estadisticas
             long tiempoSimulacion = System.currentTimeMillis() - miliInicio;
