@@ -19,17 +19,16 @@ public class Metre extends Thread {
     @Override
     public void run() {
 
-        while (!fin) {
+        while (!fin) { //Mientras que no acaba esta a la espera de recibir mensajes
             try {
                 String mensaje = flujoE.readLine();
                 System.out.println("Recibido: " + mensaje);
             } catch (IOException e) {
             }
         }
-
     }
     
-    public void finalizar() {
+    public void finalizar() { 
         fin = true;
     }
     

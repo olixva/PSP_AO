@@ -7,13 +7,15 @@ import java.util.concurrent.Semaphore;
 
 public class Restaurante {
 
-    final static int MAX_MESAS = 20;
+    final static int MAX_MESAS = 100;
     final static int MAX_COCINEROS = 8;
 
     public static void main(String[] args) {
 
         System.out.println("Iniciando servicio restaurante...");
-        System.out.println("Antonio Oliva Carceles " + LocalDate.now());
+        System.out.println("Antonio Oliva Carceles " + LocalDate.now() + "\n-----------------------------------");
+        
+        long miliInicio = System.currentTimeMillis(); //Obtenemos los ms de inicio
         try {
             Sincro sincro = new Sincro(MAX_MESAS);
 
@@ -24,10 +26,7 @@ public class Restaurante {
             Metre metre = new Metre(pipeEntrada);
 
             // Inicialiazamos los cocineros
-            Semaphore[] cocineros = new Semaphore[MAX_COCINEROS];
-            for (int i = 0; i < cocineros.length; i++) {
-                cocineros[i] = new Semaphore(1);
-            }
+            Semaphore cocineros = new Semaphore(MAX_COCINEROS);
 
             // Iniciclizamos concurrentemente las mesas
             CyclicBarrier inicioMesas = new CyclicBarrier(MAX_MESAS);
@@ -37,9 +36,12 @@ public class Restaurante {
 
             // Esperamos a que terminen todas las mesas
             sincro.esperarFinMesa();
-            metre.finalizar();
-            
+            metre.finalizar(); //Finalizamos la instancia Metre
+
             // Mostramos estadisticas
+            long tiempoSimulacion = System.currentTimeMillis() - miliInicio;
+            System.out.println("---------------------------- \nSimulacion terminada");
+            System.out.println("La simulacion ha durado " + tiempoSimulacion + " ms.");
 
         } catch (IOException e) {
             e.printStackTrace();

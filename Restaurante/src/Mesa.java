@@ -12,12 +12,12 @@ public class Mesa extends Thread {
     Semaphore bloqueoPantalla;
 
     int id;
-    Semaphore[] cocineros;
+    Semaphore cocineros;
 
     PipedWriter pipeSalida;
     PrintWriter flujoS;
 
-    public Mesa(CyclicBarrier inicio, int id, Semaphore[] cocineros, PipedWriter pipeSalida, Sincro sincro) {
+    public Mesa(CyclicBarrier inicio, int id, Semaphore cocineros, PipedWriter pipeSalida, Sincro sincro) {
         this.inicio = inicio;
         this.id = id;
         this.cocineros = cocineros;
@@ -37,26 +37,30 @@ public class Mesa extends Thread {
             inicio.await();
 
             Random numeroAleatorio = new Random();
-            boolean terminada = false;
-            while (!terminada) {
+            boolean comandaTerminada = false;
+            while (!comandaTerminada) {
 
-                for (int i = 0; i < cocineros.length && !terminada; i++) {
+                // Si consigue cocinero comen, terminan y notifican que han acabado.
+                if (cocineros.tryAcquire()) {
 
-                    if (cocineros[i].tryAcquire()) {
-                        Thread.sleep(numeroAleatorio.nextInt(1500) + 500);
-                        System.out.println("Mesa " + id + " ha terminado.");
-                        sincro.notificarFinMesa();
+                    bloqueoPantalla.acquire();
+                    System.out.println("Mesa " + id + " esta comiendo.");
+                    bloqueoPantalla.release();
 
-                        terminada = true;
-                        cocineros[i].release();
-                    }
-                }
-                
-                if (!terminada) {
+                    Thread.sleep(numeroAleatorio.nextInt(1000) + 5000);
+
+                    bloqueoPantalla.acquire();
+                    System.out.println("Mesa " + id + " ha terminado.");
+                    bloqueoPantalla.release();
+
+                    sincro.notificarFinMesa();
+
+                    comandaTerminada = true;
+                    cocineros.release(); // Liberamos al cocinero.
+                } else { // Si no cosigue cocinero espera y avisa al Metre
                     Thread.sleep(numeroAleatorio.nextInt(1000));
                     esperarCocinero();
                 }
-
             }
 
         } catch (InterruptedException | BrokenBarrierException e) {
