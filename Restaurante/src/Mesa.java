@@ -19,14 +19,14 @@ public class Mesa extends Thread {
     PipedWriter pipeSalida;
     PrintWriter flujoS;
 
-    public Mesa(CyclicBarrier inicio, int id, Semaphore cocineros, PipedWriter pipeSalida, Sincro sincro) {
+    public Mesa(CyclicBarrier inicio, int id, Semaphore cocineros, PipedWriter pipeSalida, Sincro sincro, Lock bloqueoPantalla) {
         this.inicio = inicio;
         this.id = id;
         this.cocineros = cocineros;
         this.pipeSalida = pipeSalida;
         this.sincro = sincro;
 
-        this.bloqueoPantalla = new ReentrantLock();
+        this.bloqueoPantalla = bloqueoPantalla;
         flujoS = new PrintWriter(pipeSalida);
 
         this.start();
@@ -76,6 +76,7 @@ public class Mesa extends Thread {
 
         System.out.println("Mesa " + id + " esperando cocinero");
         flujoS.println("Mesa " + id + " esperando cocinero");
+        flujoS.flush();
         
         bloqueoPantalla.unlock();
     }

@@ -4,6 +4,8 @@ import java.io.PipedWriter;
 import java.time.LocalDate;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Restaurante {
 
@@ -28,10 +30,13 @@ public class Restaurante {
             // Inicialiazamos los cocineros
             Semaphore cocineros = new Semaphore(MAX_COCINEROS);
 
+            //Creamos el candado para imprimir por pantalla
+            Lock lock = new ReentrantLock();
+            
             // Iniciclizamos concurrentemente las mesas
             CyclicBarrier inicioMesas = new CyclicBarrier(MAX_MESAS);
             for (int i = 0; i < MAX_MESAS; i++) {
-                new Mesa(inicioMesas, i, cocineros, pipeSalida, sincro);
+                new Mesa(inicioMesas, i, cocineros, pipeSalida, sincro, lock);
             }
 
             // Esperamos a que terminen todas las mesas
