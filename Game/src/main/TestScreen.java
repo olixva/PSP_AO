@@ -1,3 +1,4 @@
+package main;
 import java.awt.Color;
 
 import topos.vista1.*;
@@ -12,7 +13,7 @@ public class TestScreen {
     static int objX = 5;
     static int objY = 5;
 
-    public static void main(String[] args) {
+    public static void mg(String[] args) {
 
         final String rutaImagenFondo = "imagenes/panel-basico.gif";
         final String rutaObjetivo = "imagenes/objetivo.png";

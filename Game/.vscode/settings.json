@@ -4,5 +4,6 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "c:\\Users\\Anton\\Downloads\\13.Game\\lib\\vista.jar"
-    ]
+    ],
+    "java.project.explorer.showNonJavaResources": true
 }
