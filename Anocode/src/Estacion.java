@@ -24,6 +24,7 @@ public class Estacion extends Thread {
 
     @Override
     public void run() {
+        //Notificamos que se ha creado
         sincro.notificarCreada();
 
         Random ramdom = new Random();
@@ -34,12 +35,12 @@ public class Estacion extends Thread {
             if ((ramdom.nextInt(9) + 1) >= 8) {
 
                 funcionando = false;
-
+                
+                //Si detectamos movimiento enviamos mensaje por la radio (pipe)
                 sincro.usarRadio();
                 radio.write(numeroEstacion);
-                sincro.soltarRadio();
             } else {
-
+                //Si no esperamos
                 try {
                     Thread.sleep(ramdom.nextInt(1000));
                 } catch (InterruptedException e) {
@@ -48,18 +49,17 @@ public class Estacion extends Thread {
             }
         }
 
-        while (true) {
-            try {
-
-                if (entradaOrdenes.readLine().equalsIgnoreCase("Atacar")) {
-                    System.out.println("Estacion numero " + numeroEstacion + " atacando.");
-                } else {
-                    System.out.println("La estacion " + numeroEstacion + " no ha atacado.");
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            //Esperamos a recibir orden, si es Atacar, atacamos.
+            if (entradaOrdenes.readLine().equalsIgnoreCase("Atacar")) {
+                System.out.println("Estacion numero " + numeroEstacion + " atacando.\n");
+            } else {
+                System.out.println("La estacion " + numeroEstacion + " no ha atacado.\n");
             }
+            sincro.soltarRadio(); //Liberamos la radio
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

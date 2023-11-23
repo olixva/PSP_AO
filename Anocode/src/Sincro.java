@@ -11,6 +11,7 @@ public class Sincro {
         this.radio = new Semaphore(1);
     }
 
+    //Metodos de sincrozacion para la creacion de las estaciones
     public void notificarCreada() {
         estacionesCreadas.countDown();
     }
@@ -23,6 +24,7 @@ public class Sincro {
         }
     }
 
+    //Metodos para el semaforo que usa el pipe Radio
     public void usarRadio() {
         try {
             radio.acquire();
