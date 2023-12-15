@@ -25,10 +25,16 @@ public class Inet {
 
         Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
         // Las recorremos
+        System.out.println("\nInterfaces de red: ");
         for (NetworkInterface netint : Collections.list(nets)) {
+            
             System.out.println("Nombre: " + netint.getDisplayName());
             System.out.println("Nombre: " + netint.getName());
+            
+            Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
+            for (InetAddress inetAddress : Collections.list(inetAddresses)) {
+                System.out.println("InetAddress: " + inetAddress);
+            }
         }
-        
     }
 }
