@@ -16,7 +16,7 @@ public class BankServer {
                 Socket miSocket = miServer.accept();
                 //Iniciamos el servicio que gestiona la conexion
                 id++;
-                BankService servicio = new BankService(miSocket, id);
+                BankService servicio = new BankService(miSocket, id, miBanco);
             }
         } catch (IOException e) {
             e.printStackTrace();
