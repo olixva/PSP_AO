@@ -20,7 +20,7 @@ public class UDPServer {
                 sUDP.receive(peticion);
                 System.out.println("Petición recibida desde: " + peticion.getAddress() + ":" + peticion.getPort());
 
-                //Enviamos un echo como respuesta
+                //Enviamos un "echo" como respuesta
                 DatagramPacket respuesta = new DatagramPacket(peticion.getData(), peticion.getLength(), peticion.getAddress(), peticion.getPort());
                 sUDP.send(respuesta);
 

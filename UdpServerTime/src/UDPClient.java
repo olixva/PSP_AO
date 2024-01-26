@@ -28,6 +28,13 @@ public class UDPClient {
                 DatagramPacket mensaje = new DatagramPacket(buffer, buffer.length, host, port);
                 sUDP.send(mensaje);
 
+                //Limpiamos el Buffer y recibimos la respuesta del servidor
+                DatagramPacket respuesta = new DatagramPacket(buffer, buffer.length);
+                sUDP.receive(respuesta);
+
+                //Imprimimos la respuesta
+                System.out.println("Respuesta: " + new String(respuesta.getData()));
+
             }
 
         } catch (SocketException e) {
