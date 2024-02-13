@@ -1,19 +1,41 @@
 package data;
 
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.SecureRandom;
+
 public class FirmaDigital {
-    private String clavePublica;
-    private String clavePrivada;
+    private KeyPair parClaves;
+    private PrivateKey clavePriv;
+    private PublicKey clavePub;
 
     public FirmaDigital() {
-        this.clavePublica = "clavePublica";
-        this.clavePrivada = "clavePrivada";
+
+        try {
+            KeyPairGenerator keyGen;
+            keyGen = KeyPairGenerator.getInstance("DSA");
+            //SE INICIALIZA EL GENERADOR DE CLAVES
+            SecureRandom numero = SecureRandom.getInstance("SHA1PRNG");
+            keyGen.initialize (1024, numero);
+            //SE CREA EL PAR DE CLAVES PRIVADA Y PÚBLICA
+            parClaves = keyGen.generateKeyPair();
+            clavePriv = parClaves.getPrivate();
+            clavePub = parClaves.getPublic();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public String getClavePublica() {
-        return clavePublica;
+    public PrivateKey getClavePrivada() {
+        return clavePriv;
     }
 
-    public String getClavePrivada() {
-        return clavePrivada;
+    public PublicKey getClavePublica() {
+        return clavePub;
     }
 }

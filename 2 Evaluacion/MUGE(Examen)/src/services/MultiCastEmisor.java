@@ -52,6 +52,4 @@ public class MultiCastEmisor extends Thread {
             throw new RuntimeException(e);
         }
     }
-
-
 }

@@ -1,11 +1,11 @@
 package services;
 
 import data.FirmaDigital;
+import main.MugeServer;
 
 import java.io.IOException;
 import java.io.PipedWriter;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -15,19 +15,18 @@ public class ClienteMultiService extends Thread {
 
     private int id;
     private Socket s;
-    private ServerSocket server;
     private PrintWriter flujoSalida;
     private Scanner flujoEntrada;
     private PrintWriter tuberiaEscritura;
     private FirmaDigital firmaDigital;
-    private Semaphore escrituraPipe = new Semaphore(1);
+    private Semaphore escrituraPipeLock;
 
-    public ClienteMultiService(int id, Socket s, ServerSocket server, PipedWriter tuberiaEscritura) {
+    public ClienteMultiService(int id, Socket s, PipedWriter tuberiaEscritura, Semaphore escrituraPipe) {
         this.id = id;
         this.s = s;
-        this.server = server;
         this.tuberiaEscritura = new PrintWriter(tuberiaEscritura, true);
-        start();
+        this.escrituraPipeLock = escrituraPipe;
+        this.start();
     }
 
     public void run() {
@@ -52,7 +51,7 @@ public class ClienteMultiService extends Thread {
                 } else if (comando.contains("halt")) {
                     System.out.println("El servidor se ha detenido");
                     salir = true;
-                    server.close();
+                    MugeServer.detenerServidor();
                 } else {
                     procesaComando(comando);
                 }
@@ -78,9 +77,9 @@ public class ClienteMultiService extends Thread {
 
             if (firmaDigital != null) {
                 try {
-                    escrituraPipe.acquire();
-                    tuberiaEscritura.println(firmaDigital.getClavePublica());
-                    escrituraPipe.release();
+                    escrituraPipeLock.acquire();
+                    tuberiaEscritura.println(firmaDigital.getClavePublica().toString());
+                    escrituraPipeLock.release();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -91,7 +90,7 @@ public class ClienteMultiService extends Thread {
         } else if (comando.contains("privada")) {
 
             if (firmaDigital != null) {
-                flujoSalida.println("Tu clave privada es: " + firmaDigital.getClavePrivada());
+                flujoSalida.println("Tu clave privada es: " + firmaDigital.getClavePrivada().toString());
             } else {
                 flujoSalida.println("No se han generado las claves. Ejecute el comando genera");
             }
