@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.net.*;
 
-public class SRIClientUDP {
+public class ClientUDPMulti {
     public static void main(String[] args) {
         String serverIP = "224.0.0.1";
         int serverPort = 7777;

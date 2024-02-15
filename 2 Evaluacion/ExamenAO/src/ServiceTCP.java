@@ -4,15 +4,14 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class SRIService extends Thread {
+public class ServiceTCP extends Thread {
 
     private int id;
     private Socket s;
     private PrintWriter flujoSalida;
     private Scanner flujoEntrada;
-    private SRIServiceUDP srIServiceUDP;
 
-    public SRIService(Socket s, int id) {
+    public ServiceTCP(Socket s, int id) {
         this.id = id;
         this.s = s;
         this.start();
@@ -50,13 +49,6 @@ public class SRIService extends Thread {
     }
 
     private void procesaComando(String comando) {
-        if (comando.contains("CLIENTE")){
-            flujoSalida.println("CLIENTE: " + id);
-        } else if (comando.contains("MENSA")){
-            srIServiceUDP = new SRIServiceUDP(comando);
-            srIServiceUDP.start();
-        } else {
-            flujoSalida.println("Comando no reconocido");
-        }
+
     }
 }

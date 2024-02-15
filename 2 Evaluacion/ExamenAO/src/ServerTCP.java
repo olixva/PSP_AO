@@ -2,8 +2,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class SRIServer {
-
+public class ServerTCP {
     public static void main(String[] args) {
         try {
             ServerSocket miServer = new ServerSocket(8899);
@@ -16,11 +15,10 @@ public class SRIServer {
                 Socket miSocket = miServer.accept();
                 //Iniciamos el servicio que gestiona la conexion
                 id++;
-                SRIService servicio = new SRIService(miSocket, id);
+                ServiceTCP servicio = new ServiceTCP(miSocket, id);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }
