@@ -57,10 +57,12 @@ public class MataService extends Thread {
 
     private void procesaComando(String comando) {
 
-        if (comando.toLowerCase().contains("start")) {
+        if (comando.toLowerCase().contains("start") && udpReciver == null) {
             udpReciver = new MataUDPReciver(s);
             udpReciver.start();
             flujoSalida.println("Servicio UDP iniciado");
+        } else if (comando.toLowerCase().contains("start") && udpReciver != null) {
+            flujoSalida.println("Servicio UDP ya iniciado");
         } else if (comando.toLowerCase().contains("stop")) {
             if (udpReciver != null) {
                 udpReciver.fin();
